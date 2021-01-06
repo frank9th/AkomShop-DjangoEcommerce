@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.models import Group
+from .decorators import unauthenticated_user, allowed_users, admin_only  
 
 # Create your views here.
 from .forms import CreateUserForm
@@ -10,8 +12,10 @@ from django.contrib import messages
 def home(request):
 	return render(request, 'home.html',{"title":home})
 
-def loginPage(request):
+@unauthenticated_user
 
+def loginPage(request):
+	
 	if request.method == 'POST':
 		# assigning varables to the username and password field 
 		username = request.POST.get('username')
@@ -23,7 +27,7 @@ def loginPage(request):
 
 		if user is not None:
 			login(request, user)
-			return redirect('dashboard')
+			return redirect('user-dashboard')
 		else:
 			messages.info(request, 'Username or password is incorrect')
 
@@ -33,22 +37,39 @@ def loginPage(request):
 	context = {}
 	return render(request, 'login.html', context)
 
+@unauthenticated_user
 def register(request):
+	
 	form = CreateUserForm()
-
 	if request.method == 'POST':
 		form = CreateUserForm(request.POST)
 		if form.is_valid():
-			form.save()
-			messages.success(request, 'Account was created')
+			user = form.save()
+			username = form.cleaned_data.get('username')
+
+			group = Group.objects.get(name='customer')
+			user.groups.add(group)
+			
+			messages.success(request, 'Account was created for' + username)
 			return redirect('login')
 
 	context = {'form':form}
 	return render(request, 'register.html', context)
 
+#User Dasbard View 
 @login_required(login_url ='login')
-def dashboard(request):
-	return render(request, 'dashboard.html',{"title":dashboard})
+#@admin_only
+def user_dashboard(request):
+	return render(request, 'user_account/user_dashboard.html',{"title":user_dashboard})
+
+# AdminDashbod View 
+@login_required(login_url ='login')
+@admin_only
+@allowed_users('admin')
+def admin_dashboard(request):
+	context = {}
+	return render(request, 'admin_account/admin_dashboard.html', context)
+
 
 def logoutUser(request):
 	logout(request)

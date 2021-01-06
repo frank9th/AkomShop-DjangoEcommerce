@@ -26,7 +26,7 @@
       <img src="{% static 'images/kom_logo_3.jpg' %}" alt="" width="60" height="30" class="d-inline-block align-top">
       AkomeShop
     </a>
-    
+    {% if request.user.is_staff %}
 
       <ul class="navbar-nav mr-auto">
      
@@ -37,6 +37,7 @@
         <a class="nav-link" href="{% url 'register' %}">Register</a>
       </li>
     </ul>
+    {% endif %}
   </div>
 
 </nav>
