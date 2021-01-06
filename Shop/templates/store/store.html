@@ -1,0 +1,36 @@
+
+{% extends 'base.html' %}
+{% load static%}
+
+
+{% block content %}
+
+	<br>
+	
+	<div class="container"> 
+		{% for product in products %}
+		<img class="thumbnail" src="{{product.image.url}}">
+			<div class="element product">
+				<h6><strong>{{product.name}}</strong></h6>
+				<button class="btn btn-outline-secondary add-btn">Add to Cart</button>
+				<a class ="btn btn-outline-success" href="#">View</a>
+				<h4 style="display: inline-block;float:center ">${{product.price|floatformat:2}}</h4>
+			</div>
+		</div>
+
+		{% endfor %}
+			
+	</div>
+
+
+		<h1> Welcome to AkomeShop</h1>
+		<h1> this is the product page</h1>
+
+
+	</div>
+
+
+
+
+
+	{% endblock %}

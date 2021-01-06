@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users, admin_only  
+from .models import *
 
 # Create your views here.
 from .forms import CreateUserForm
@@ -12,8 +13,22 @@ from django.contrib import messages
 def home(request):
 	return render(request, 'home.html',{"title":home})
 
-@unauthenticated_user
 
+def store(request):
+	products = Product.objects.all()
+	context = {'products':products}
+
+	return render(request, 'store/store.html', context)
+
+
+
+
+
+
+
+
+
+@unauthenticated_user
 def loginPage(request):
 	
 	if request.method == 'POST':
@@ -31,10 +46,7 @@ def loginPage(request):
 		else:
 			messages.info(request, 'Username or password is incorrect')
 
-
-
-
-	context = {}
+	context = {'messages':messages}
 	return render(request, 'login.html', context)
 
 @unauthenticated_user
