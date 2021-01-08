@@ -8,8 +8,12 @@
 	<br>
 	
 	<div class="container"> 
+		<h1> Welcome to AkomeShop</h1>
+		<h1> this is the product page</h1>
+		<hr>
+
 		{% for product in products %}
-		<img class="thumbnail" src="{{product.image.url}}">
+		<img class="thumbnail" src="{{product.imageURL}}">
 			<div class="element product">
 				<h6><strong>{{product.name}}</strong></h6>
 				<button class="btn btn-outline-secondary add-btn">Add to Cart</button>
@@ -23,11 +27,16 @@
 	</div>
 
 
-		<h1> Welcome to AkomeShop</h1>
-		<h1> this is the product page</h1>
-
+		
 
 	</div>
+
+
+		{% for product in products %}
+			{{product.name}}
+		{% endfor%}
+
+
 
 
 
