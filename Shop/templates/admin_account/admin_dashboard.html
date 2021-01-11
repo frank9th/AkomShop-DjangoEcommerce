@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+<Dashboard>
+
+	<style>
+	.hello-user{
+		font-size: 24px;
+		color:blue;
+		font-weight: 600px;
+		margin-right:20px;
+	}
+
+	</style>
+	<br>
+	<div> 
+		<h1> Admin Dashboard </h1>
+		<span class="hello-user">Hello!, {{request.user}}</span>
+    <span><a href="{% url 'logout' %}">Logout</a></span>
+
+	</div>
+
+
+
+	{% endblock %}

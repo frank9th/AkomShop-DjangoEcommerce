@@ -1,0 +1,42 @@
+
+{% extends 'main.html' %}
+{%load static %}
+
+{% block content %}
+
+<br>
+<hr>
+<hr>
+<div>
+<div class="container">
+<h1>Cart</h1>
+<h3>Items: {{order.get_cart_items}}</h3>
+<h3>Total: NGN {{order.get_cart_total|floatformat:2}} </h3>
+<a href="{% url 'checkout' %}">Proceed Checkout </a>
+<hr>
+<table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Qty</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in items %}
+    <tr>
+      <th scope="row"><img src="{{item.product.imageURL}}"></th>
+      <td>{{item.product.name}}</td>
+      <td>NGN {{item.product.price|floatformat:2}}</td>
+      <td>{{item.quantity}}</td>
+      <td>NGN {{item.get_total|floatformat:2}}</td>
+    </tr>
+   {% endfor %}
+ </tbody>
+</table>
+
+</div>
+</div>
+{% endblock %}
