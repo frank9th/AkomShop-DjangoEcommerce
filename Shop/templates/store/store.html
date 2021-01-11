@@ -3,37 +3,30 @@
 
 {% block content %}
 
-	<br>
 	
-	
+<div class="container">
+		<br>
+		<br>
+		<hr>
+
 		<h1> Welcome to AkomeShop</h1>
 		<h1> this is the product page</h1>
 		<hr>
-
+	<div class="row">
 		{% for product in products %}
-		<img class="thumbnail" src="{{product.imageURL}}">
-			<div class="element product">
-				<h6><strong>{{product.name}}</strong></h6>
+			<div class="col-lg-4"> 
+				<img class="thumbnail" src="{{product.imageURL}}">
+				<div class="box-element product"></div>
+					<h6><strong>{{product.name}}</strong></h6>
+				<hr>
 				<button class="btn btn-outline-secondary add-btn">Add to Cart</button>
-				<a class ="btn btn-outline-success" href="#">View</a>
-				<h4 style="display: inline-block;float:center ">${{product.price|floatformat:2}}</h4>
+				<a class="btn btn-outline-success" href="#">View</a>
+				<h4 style="display:inline-block;float:right">&#8358;{{product.price|floatformat:2}}</h4>
 			</div>
-		</div>
-
 		{% endfor %}
-			
+		
 	</div>
-
-	</div>
-
-
-		{% for product in products %}
-			{{product.name}}
-		{% endfor%}
-
-
-
-
+</div>
 
 
 

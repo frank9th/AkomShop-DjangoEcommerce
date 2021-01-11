@@ -9,16 +9,18 @@
 
 
 
-
-
 	 <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
-  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
+  <!-- Material Design Bootstrap-->
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet"> -->
+  <!-- Your custom styles (optional) --->
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+
+
+  <link href="{% static 'css/store.css' %}" rel="stylesheet">
+
 
 
 </head>
@@ -57,7 +59,7 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar border-light">
     <div class="container">
 
       <!-- Brand -->
@@ -126,12 +128,14 @@
   </nav>
    <!-- Navbar -->
 
- 
+  
 
 
       {% block content %}
 
   {% endblock %}
+
+
 
 
 

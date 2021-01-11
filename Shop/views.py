@@ -18,8 +18,19 @@ def store(request):
 	products = Product.objects.all()
 	context = {'products':products}
 
+	return render(request, 'store/store.html',  context)
+	#return render(request, 'home-page.html',  context)
+
+
+def home_page(request):
+	products = Product.objects.all()
+	context = {'products':products}
+
 	#return render(request, 'store/store.html',  context)
 	return render(request, 'home-page.html',  context)
+
+
+
 
 
 def cart(request):
