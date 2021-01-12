@@ -7,6 +7,7 @@ from .decorators import unauthenticated_user, allowed_users, admin_only
 from .models import *
 from django.http import JsonResponse 
 import json 
+import datetime
 # Create your views here.
 from .forms import CreateUserForm
 from django.contrib import messages
@@ -42,7 +43,7 @@ def cart(request):
 		items = order.orderitem_set.all()
 	else:
 		items = []
-		order ={'get_cart_total':0, 'get_cart_items':0}
+		order ={'get_cart_total':0, 'get_cart_items':0, 'shipping':False}
 
 	context = {'items':items, 'order':order}
 	return render(request, 'store/cart.html', context)
@@ -54,7 +55,7 @@ def checkout(request):
 		items = order.orderitem_set.all()
 	else:
 		items = []
-		order ={'get_cart_total':0, 'get_cart_items':0}
+		order ={'get_cart_total':0, 'get_cart_items':0, 'shipping':False}
 
 	context = {'items':items, 'order':order}
 	return render(request, 'store/checkout.html', context)
@@ -86,6 +87,36 @@ def updateItem(request):
 
 
 	return JsonResponse('Item was added', safe=False)
+
+def processOrder(request):
+	transaction_id = datetime.datetime.now().timestamp()
+	data = json.loads(request.body)
+	#print('Data:', request.body)
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer=customer, complete=False)
+		total = float(data['form']['total'])
+		order.transaction_id = transaction_id
+		if total == order.get_cart_total:
+			order.complete = True 
+		order.save()
+
+		if order.shipping == True:
+			ShippingAddress.objects.create(
+				customer=customer,
+				order=order, 
+				address=data['shipping']['address'],
+				city=data['shipping']['city'],
+				state=data['shipping']['state'],
+				zipcode=data['shipping']['zipcode'], 
+				)
+
+
+		# remain to send the shippinh=g info 
+	else:
+		print('user is not logged in...')
+
+	return JsonResponse('Payment complete', safe=False)
 
 
 
