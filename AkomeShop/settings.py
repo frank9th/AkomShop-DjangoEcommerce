@@ -34,6 +34,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'nucleus',
+    #'app.apps.AppAdminConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,6 +75,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'nucleus.context_processors.nucleus',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -145,3 +148,39 @@ STATICFILES_DIRS =[
 MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '/static/images')
+
+
+_ = lambda s: s  # Translations in setting file
+
+NUCLEUS = {
+    'sidebar': {
+        # Title
+        'title': _('AkomeShop'),
+
+        # Footer
+        'footer': {
+            'title': _('Custom title'),
+            'description': _('Longer text displayed below the title'),
+        },
+
+        # Navigation
+        'navigation': {
+            # Application
+            'auth': {
+                'title': _('Accounts'),  # Override title
+                'icon': 'images/icon.png'  # Optional
+            },
+
+            # Model
+            'auth.User': {
+                'title': _('Users'),
+                'icon': 'images/icon.png'  # Optional
+
+
+
+            }        
+        }    
+    }
+}
+
+

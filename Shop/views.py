@@ -16,6 +16,11 @@ def home(request):
 	return render(request, 'home.html',{"title":home})
 
 
+def admin_login(request):
+	return render(request, 'admin/login.html',{"title":admin_login})
+
+
+
 def store(request):
 	products = Product.objects.all()
 	context = {'products':products}
@@ -30,9 +35,6 @@ def home_page(request):
 
 	#return render(request, 'store/store.html',  context)
 	return render(request, 'home-page.html',  context)
-
-
-
 
 
 def cart(request):
@@ -178,3 +180,21 @@ def admin_dashboard(request):
 def logoutUser(request):
 	logout(request)
 	return redirect('login')
+
+
+
+def stat_items():
+	return render_to_string('nucleus/components/stat_item.html', {
+	    value: '5269',
+	    title: 'Units Sold',
+	    subtitle: 'Avg. 351 per week', 
+	    label: '-12%',
+	})
+
+
+def index(request):
+	context={}
+
+	return render(request, 'admin/index.html', context)
+
+
