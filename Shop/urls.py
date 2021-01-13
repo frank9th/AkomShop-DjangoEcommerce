@@ -16,5 +16,8 @@ urlpatterns = [
     path('logout', views.logoutUser, name='logout'),
     path('register', views.register, name='register'),
     path('profile', views.user_dashboard, name='user-dashboard'),
+    path('chart/', views.chart, name='chart'),
+    path('table/', views.table, name='table'),
+    path('password/', views.password, name='password'),
     path('akom-admin', views.admin_dashboard, name='admin-dashboard'),
 ]

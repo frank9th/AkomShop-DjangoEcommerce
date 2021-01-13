@@ -162,11 +162,25 @@ def register(request):
 	context = {'form':form}
 	return render(request, 'register.html', context)
 
+
+
 #User Dasbard View 
 @login_required(login_url ='login')
 #@admin_only
 def user_dashboard(request):
 	return render(request, 'user_account/user_dashboard.html',{"title":user_dashboard})
+
+
+def chart(request):
+	return render(request, 'user_account/charts.html',{"title":chart})
+
+def table(request):
+	return render(request, 'user_account/tables.html',{"title":table})
+
+def password(request):
+	return render(request, 'user_account/password.html',{"title":password})
+
+
 
 # AdminDashbod View 
 @login_required(login_url ='login')
