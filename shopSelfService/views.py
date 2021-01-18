@@ -56,7 +56,7 @@ def createOrder(request):
 		form = OrderForm(request.POST) # throwing the post data into the form 
 		if form.is_valid(): # performing valid check 
 			form.save() # saving the data in the db 
-			return redirect('/')
+			return redirect('profile')
 	context= { 'form':form}
 	return render(request, 'user_account/order_form.html', context)
 
@@ -74,7 +74,7 @@ def updateOrder(request, pk): # passing the primary key into the request views.
 		form = OrderForm(request.POST, instance=order) # throwing the post data into the form 
 		if form.is_valid(): # performing valid check 
 			form.save() # saving the data in the db 
-			return redirect('/')
+			return redirect('profile')
 
 	context= {'form': form}
 	return render(request, 'user_account/order_form.html', context)
@@ -86,7 +86,7 @@ def delete_item(request, pk):
 	if request.method =='POST':
 		#print('Printing post:', request.POST)
 			item.delete() # saving the data in the db 
-			return redirect('/')
+			return redirect('profile')
 
 
 	context= {'item':item}
@@ -100,7 +100,7 @@ def addClient(request):
 		form = addCustomerForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('/')
+			return redirect('profile')
 
 
 	context= {'form':form}

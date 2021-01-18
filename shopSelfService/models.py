@@ -82,6 +82,7 @@ class Order(models.Model):
 		('delivered', 'Delivered'),
 		('out for delivery', 'out for delivery'),
 		('cancled', 'Cancled')
+		
 
 		)
 
