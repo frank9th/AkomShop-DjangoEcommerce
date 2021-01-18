@@ -8,8 +8,8 @@ from .models import *
 from django.http import JsonResponse 
 import json 
 import datetime
+from .forms import *
 # Create your views here.
-from .forms import CreateUserForm
 from django.contrib import messages
 
 def home(request):
@@ -104,7 +104,7 @@ def processOrder(request):
 		order.save()
 
 		if order.shipping == True:
-			ShippingAddress.objects.create(
+			billinInfo = ShippingAddress.objects.create(
 				customer=customer,
 				order=order, 
 				address=data['shipping']['address'],
@@ -119,6 +119,8 @@ def processOrder(request):
 		print('user is not logged in...')
 
 	return JsonResponse('Payment complete', safe=False)
+	context= {'billinInfo':billinInfo, 'customer':customer, 'transaction_id':order.transaction_id, 'total':total }
+	return render(request, 'user_account/user_dashboard.html', context)
 
 
 
@@ -168,7 +170,8 @@ def register(request):
 @login_required(login_url ='login')
 #@admin_only
 def user_dashboard(request):
-	return render(request, 'user_account/user_dashboard.html',{"title":user_dashboard})
+	context = {}
+	return render(request, 'user_account/user_dashboard.html', context)
 
 
 def chart(request):
@@ -212,3 +215,25 @@ def index(request):
 	return render(request, 'admin/index.html', context)
 
 
+
+def customer_details(request, pk_test):
+	customer = Customer.objects.get(id=pk_test)
+
+	orders = customer.order_set.all()
+	order_count = orders.count()
+
+	context={'customer': customer, 'orders':orders, 'order_count': order_count}
+	#return render(request, 'user_account/user_dashboard.html', context)
+
+def createOrder(request):
+	form = OrderForm()
+	if request.method == 'POST':
+		print('Printing POST:', request.POST)
+		form = OrderForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect ('/')
+	
+
+	context = {'form': form}
+	return render(request, 'store/order_form.html', context)

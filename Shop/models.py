@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
-
 # Create your models here.
 class Customer(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -35,10 +33,17 @@ class Product(models.Model):
 	
 
 class Order(models.Model):
+	STATUS =(
+		('Delivered', 'Delivered'),
+		('Pending', 'Pending'),
+		('Out for delivery', 'Out for delivery'), 
+		)
 	customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
 	date_ordered = models.DateTimeField(auto_now_add=True)
 	complete = models.BooleanField(default=False, null=True, blank=False)
 	transaction_id = models.CharField(max_length=200, null=True)
+	status = models.BooleanField(max_length=200, null=True, choices=STATUS)
+
 
 
 	def __str__(self):
@@ -103,5 +108,21 @@ class ShippingAddress(models.Model):
 		return self.address + " |  " + self.customer.name + " | " + self.order.transaction_id
 
 
-class BillingAddress(models.Model):
+class PlacedOrder(models.Model):
+	STATUS =(
+
+		('Delivered', 'Delivered'),
+		('Pending', 'Pending'),
+		('Out for delivery', 'Out for delivery'), 
+		)
+		
 	customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+	product = models.ManyToManyField(Product)
+	quantity = models.IntegerField(default=0, null=True, blank=True)
+	address = models.CharField(max_length=200, null=True)
+	total = models.FloatField()
+	status = models.BooleanField(max_length=200, null=True, choices=STATUS, blank=True)
+	date_ordered = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return self.customer
